@@ -49,21 +49,21 @@ ROTATE_180                                  = 2
 ROTATE_270                                  = 3
 
 class EPD:
-    def __init__(self, reset, dc, busy, cs, clk, mosi):
+    def __init__(self, reset, dc, busy, cs, clk, mosi, miso):
         self.reset_pin = reset
-        self.reset_pin.mode(Pin.OUT)
+        self.reset_pin.init(mode=Pin.OUT)
 
         self.dc_pin = dc
-        self.dc_pin.mode(Pin.OUT)
+        self.dc_pin.init(mode=Pin.OUT)
 
         self.busy_pin = busy
-        self.busy_pin.mode(Pin.IN)
+        self.busy_pin.init(mode=Pin.IN)
 
         self.cs_pin = cs
-        self.cs_pin.mode(Pin.OUT)
-        self.cs_pin.pull(Pin.PULL_UP)
+        self.cs_pin.init(mode=Pin.OUT)
+        self.cs_pin.init(pull=Pin.PULL_UP)
 
-        self.spi = SPI(0, mode=SPI.MASTER, baudrate=2000000, polarity=0, phase=0, pins=(clk, mosi, None))
+        self.spi = SPI(-1, baudrate=2000000, polarity=0, phase=0, sck=clk, mosi=mosi, miso=miso)
 
         self.width = EPD_WIDTH
         self.height = EPD_HEIGHT
@@ -103,7 +103,7 @@ class EPD:
 
     def _spi_transfer(self, data):
         self.cs_pin(False)
-        self.spi.write(data)
+        self.spi.write(bytearray([data]))
         self.cs_pin(True)
 
     lut_vcom0 = [

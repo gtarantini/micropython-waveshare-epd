@@ -20,16 +20,17 @@ At the moment it supports 1.54" Waveshare two-color E-Paper Display only.
 
 ### Initializing
 
-The e-paper display uses 6 data lines for communication:
+The e-paper display uses 6 data lines for communication. MISO is not used by the display, but requierd to initialize soft SPI:
 
-    reset = Pin('P19')
-    dc = Pin('P20')
-    busy = Pin('P18')
-    cs = Pin('P4')
-    clk = Pin('P21')
-    mosi = Pin('P22')
+    reset = Pin(27)
+    dc =    Pin(26)
+    busy =  Pin(32)
+    cs =    Pin(5)
+    clk =   Pin(18)
+    mosi =  Pin(23)
+    miso =  Pin(19)
 
-    epd = epd1in54b.EPD(reset, dc, busy, cs, clk, mosi)
+    epd = epd1in54b.EPD(reset, dc, busy, cs, clk, mosi, miso)
 
 ### Displaying data
 

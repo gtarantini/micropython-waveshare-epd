@@ -1,20 +1,18 @@
-import pycom
-pycom.heartbeat(False)
-
 from machine import Pin
-import epd1in54b
 import imagedata
+import epd1in54b
 import font12
 import font20
 
-reset = Pin('P19')
-dc = Pin('P20')
-busy = Pin('P18')
-cs = Pin('P4')
-clk = Pin('P21')
-mosi = Pin('P22')
+reset = Pin(27)
+dc = Pin(26)
+busy = Pin(32)
+cs = Pin(5)
+clk = Pin(18)
+mosi = Pin(23)
+miso = Pin(19)
 
-epd = epd1in54b.EPD(reset, dc, busy, cs, clk, mosi)
+epd = epd1in54b.EPD(reset, dc, busy, cs, clk, mosi, miso)
 epd.init()
 
 # initialize the frame buffer
@@ -54,28 +52,28 @@ epd.clear_frame(frame_black, frame_red)
 # You can also draw 1-color bitmaps in Windows BMP format
 epd.set_rotate(epd1in54b.ROTATE_0)
 epd.clear_frame(frame_black, frame_red)
-epd.draw_bmp(frame_black, '/flash/gfx/aykm200.bmp', epd1in54b.COLORED)
+epd.draw_bmp(frame_black, '/gfx/aykm200.bmp', epd1in54b.COLORED)
 epd.display_frame(frame_black, frame_red)
 
 epd.set_rotate(epd1in54b.ROTATE_90)
 epd.clear_frame(frame_black, frame_red)
-epd.draw_bmp(frame_black, '/flash/gfx/aykm200.bmp', epd1in54b.COLORED)
+epd.draw_bmp(frame_black, '/gfx/aykm200.bmp', epd1in54b.COLORED)
 epd.display_frame(frame_black, frame_red)
 
 epd.set_rotate(epd1in54b.ROTATE_180)
 epd.clear_frame(frame_black, frame_red)
-epd.draw_bmp_at(frame_black, 10, 13, '/flash/gfx/happy180.bmp', epd1in54b.COLORED)
+epd.draw_bmp_at(frame_black, 10, 13, '/gfx/happy180.bmp', epd1in54b.COLORED)
 epd.display_frame(frame_black, frame_red)
 
 epd.set_rotate(epd1in54b.ROTATE_270)
 epd.clear_frame(frame_black, frame_red)
-epd.draw_bmp_at(frame_black, 10, 13, '/flash/gfx/happy180.bmp', epd1in54b.COLORED)
+epd.draw_bmp_at(frame_black, 10, 13, '/gfx/happy180.bmp', epd1in54b.COLORED)
 epd.display_frame(frame_black, frame_red)
 
 epd.set_rotate(epd1in54b.ROTATE_0)
 epd.clear_frame(frame_black, frame_red)
-epd.draw_bmp(frame_black, '/flash/gfx/pycom200_b.bmp', epd1in54b.COLORED)
-epd.draw_bmp(frame_red, '/flash/gfx/pycom200_r.bmp', epd1in54b.COLORED)
+epd.draw_bmp(frame_black, '/gfx/pycom200_b.bmp', epd1in54b.COLORED)
+epd.draw_bmp(frame_red, '/gfx/pycom200_r.bmp', epd1in54b.COLORED)
 
 epd.display_string_at(frame_black, 12, 188, "More at http://kapusta.cc", font12, epd1in54b.COLORED)
 epd.display_frame(frame_black, frame_red)
